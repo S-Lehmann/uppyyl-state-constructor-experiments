@@ -1,0 +1,465 @@
+<?xml version='1.0' encoding='utf-8'?>
+<nta>
+  <declaration>clock t_exec, t_active;
+bool critical = false;
+int step = 0;
+
+void update_data() { 
+  step++;
+  if (step == 10) { 
+    critical = true;
+  } 
+}
+
+void init_system() { 
+  critical = false;
+  step = 0;
+}
+broadcast chan DBM_init_end;</declaration>
+  <template>
+    <name>Ex_Tmpl</name>
+    <parameter></parameter>
+    <declaration></declaration>
+    <location id="loc-ucvorqt8ilpgt455" x="85" y="-51">
+      <name x="59" y="-85">Execute</name>
+      <label kind="invariant" x="-8" y="-42">t_exec &lt;= 5</label>
+    </location>
+    <location id="loc-kicv1dat4h1jdjpw" x="-195" y="-51">
+      <name x="-205" y="-85">Off</name>
+      <urgent/>
+    </location>
+    <location id="loc-a1gjqufsvgc4o6ls" x="-59" y="-51">
+      <name x="-69" y="-85">On</name>
+      <urgent/>
+    </location>
+    <location id="loc-aj208db8luac95bd" x="-109" y="-151">
+      <name x="-89" y="-171">SYNC_Pre_Init</name>
+    </location>
+    <init ref="loc-aj208db8luac95bd"/>
+    <transition>
+      <source ref="loc-kicv1dat4h1jdjpw"/>
+      <target ref="loc-a1gjqufsvgc4o6ls"/>
+      <label kind="assignment" x="-187" y="0">init_system(),
+t_active = 0</label>
+      <nail x="-195" y="0"/>
+      <nail x="-102" y="0"/>
+    </transition>
+    <transition>
+      <source ref="loc-ucvorqt8ilpgt455"/>
+      <target ref="loc-a1gjqufsvgc4o6ls"/>
+      <label kind="guard" x="-8" y="17">t_exec &gt;= 2</label>
+      <label kind="assignment" x="-8" y="0">update_data()</label>
+      <nail x="85" y="0"/>
+      <nail x="-17" y="0"/>
+    </transition>
+    <transition>
+      <source ref="loc-a1gjqufsvgc4o6ls"/>
+      <target ref="loc-ucvorqt8ilpgt455"/>
+      <label kind="guard" x="-25" y="-85">!critical</label>
+      <label kind="assignment" x="-25" y="-68">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-a1gjqufsvgc4o6ls"/>
+      <target ref="loc-kicv1dat4h1jdjpw"/>
+      <label kind="guard" x="-153" y="-68">critical</label>
+    </transition>
+    <transition>
+      <source ref="loc-aj208db8luac95bd"/>
+      <target ref="loc-a1gjqufsvgc4o6ls"/>
+      <label kind="synchronisation" x="-134" y="-131">DBM_init_end?</label>
+    </transition>
+  </template>
+  <template>
+    <name>SYNC_DBM_Init</name>
+    <parameter></parameter>
+    <declaration></declaration>
+    <location id="loc-4tfrdrfuyy4qxu0m" x="0" y="0">
+      <name x="20" y="-20">Init</name>
+      <committed/>
+    </location>
+    <location id="loc-q8pkd81xgem29z75" x="0" y="100">
+      <name x="20" y="80">Rec1</name>
+    </location>
+    <location id="loc-h8k5xnw6bwmnt42o" x="0" y="200">
+      <name x="20" y="180">Rec2</name>
+      <urgent/>
+    </location>
+    <location id="loc-1n98q7ergxh0kqxi" x="0" y="300">
+      <name x="20" y="280">Rec3</name>
+    </location>
+    <location id="loc-yx4lx4t1hnmzs5ey" x="0" y="400">
+      <name x="20" y="380">Rec4</name>
+      <urgent/>
+    </location>
+    <location id="loc-byooy75vwj5l1sff" x="0" y="500">
+      <name x="20" y="480">Rec5</name>
+    </location>
+    <location id="loc-txe9akgxortjr7fi" x="0" y="600">
+      <name x="20" y="580">Rec6</name>
+      <urgent/>
+    </location>
+    <location id="loc-00ghfe3g6cubonj4" x="0" y="700">
+      <name x="20" y="680">Rec7</name>
+    </location>
+    <location id="loc-agllnjinnmpzyh8w" x="0" y="800">
+      <name x="20" y="780">Rec8</name>
+      <urgent/>
+    </location>
+    <location id="loc-owt8yjf72jqhh8u6" x="0" y="900">
+      <name x="20" y="880">Rec9</name>
+    </location>
+    <location id="loc-fse7c4go1ha55ljz" x="0" y="1000">
+      <name x="20" y="980">Rec10</name>
+      <urgent/>
+    </location>
+    <location id="loc-0k0jphlwdceicwkv" x="0" y="1100">
+      <name x="20" y="1080">Rec11</name>
+    </location>
+    <location id="loc-1zxt6docina91aqq" x="0" y="1200">
+      <name x="20" y="1180">Rec12</name>
+      <urgent/>
+    </location>
+    <location id="loc-0ga4s7gvpmf7vb7z" x="0" y="1300">
+      <name x="20" y="1280">Rec13</name>
+    </location>
+    <location id="loc-psevzs55ir7s0soi" x="0" y="1400">
+      <name x="20" y="1380">Rec14</name>
+      <urgent/>
+    </location>
+    <location id="loc-3pd5l910mmb0ekd8" x="0" y="1500">
+      <name x="20" y="1480">Rec15</name>
+    </location>
+    <location id="loc-8enrrods49ldu47c" x="0" y="1600">
+      <name x="20" y="1580">Rec16</name>
+      <urgent/>
+    </location>
+    <location id="loc-89cijysup9caiyfd" x="0" y="1700">
+      <name x="20" y="1680">Rec17</name>
+    </location>
+    <location id="loc-8na2r9gbuseavucz" x="0" y="1800">
+      <name x="20" y="1780">Rec18</name>
+      <urgent/>
+    </location>
+    <location id="loc-tul1cwwjidrloanp" x="0" y="1900">
+      <name x="20" y="1880">Rec19</name>
+    </location>
+    <location id="loc-wkk4lmnwejvgpp63" x="0" y="2000">
+      <name x="20" y="1980">Rec20</name>
+      <urgent/>
+    </location>
+    <location id="loc-ekhzp8hepn1x2bpq" x="0" y="2100">
+      <name x="20" y="2080">Rec21</name>
+    </location>
+    <location id="loc-4my6t8tvx80x1joe" x="0" y="2200">
+      <name x="20" y="2180">Rec22</name>
+      <urgent/>
+    </location>
+    <location id="loc-511am5lj5safemw5" x="0" y="2300">
+      <name x="20" y="2280">Rec23</name>
+    </location>
+    <location id="loc-cz33ykvn43nabwp0" x="0" y="2400">
+      <name x="20" y="2380">Rec24</name>
+      <urgent/>
+    </location>
+    <location id="loc-7wgmwykqxo4iun3d" x="0" y="2500">
+      <name x="20" y="2480">Rec25</name>
+    </location>
+    <location id="loc-pib8jvvlp24omxy7" x="0" y="2600">
+      <name x="20" y="2580">Rec26</name>
+      <urgent/>
+    </location>
+    <location id="loc-pvl5n1xd2nr46whd" x="0" y="2700">
+      <name x="20" y="2680">Rec27</name>
+    </location>
+    <location id="loc-ngk9wv33m5ymae9k" x="0" y="2800">
+      <name x="20" y="2780">Rec28</name>
+      <urgent/>
+    </location>
+    <location id="loc-ixnf036u7ij67nk9" x="0" y="2900">
+      <name x="20" y="2880">Rec29</name>
+    </location>
+    <location id="loc-oh99q6ij2zcfb23z" x="0" y="3000">
+      <name x="20" y="2980">Rec30</name>
+      <urgent/>
+    </location>
+    <location id="loc-due759qyq49wkcku" x="0" y="3100">
+      <name x="20" y="3080">Rec31</name>
+    </location>
+    <location id="loc-dpjholc5zmv8pu6j" x="0" y="3200">
+      <name x="20" y="3180">Rec32</name>
+      <urgent/>
+    </location>
+    <location id="loc-bqkswxx1wchnj95t" x="0" y="3300">
+      <name x="20" y="3280">Rec33</name>
+    </location>
+    <location id="loc-k663v53rfcsgx3ht" x="0" y="3400">
+      <name x="20" y="3380">Rec34</name>
+      <urgent/>
+    </location>
+    <location id="loc-c8rgoz9sehyaxsld" x="0" y="3500">
+      <name x="20" y="3480">Rec35</name>
+    </location>
+    <location id="loc-wglvee9agpeb4aqp" x="0" y="3600">
+      <name x="20" y="3580">Rec36</name>
+      <urgent/>
+    </location>
+    <location id="loc-kpkt41zb0nt0hter" x="0" y="3700">
+      <name x="20" y="3680">Rec37</name>
+    </location>
+    <location id="loc-cuvn0ap0nw64335r" x="0" y="3800">
+      <name x="20" y="3780">Rec38</name>
+      <urgent/>
+    </location>
+    <location id="loc-cpejo9kauium687i" x="0" y="3900">
+      <name x="20" y="3880">Rec39</name>
+    </location>
+    <location id="loc-m7bvmgkeu96cydor" x="0" y="4000">
+      <name x="20" y="3980">Rec40</name>
+      <urgent/>
+    </location>
+    <location id="loc-uas7ql71q6bw7ab9" x="0" y="4100">
+      <name x="20" y="4080">Rec41</name>
+      <urgent/>
+    </location>
+    <location id="loc-bcwzrwg20m7i7yu0" x="0" y="4200">
+      <name x="20" y="4180">End</name>
+    </location>
+    <init ref="loc-4tfrdrfuyy4qxu0m"/>
+    <transition>
+      <source ref="loc-4tfrdrfuyy4qxu0m"/>
+      <target ref="loc-q8pkd81xgem29z75"/>
+      <label kind="assignment" x="0" y="50">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-q8pkd81xgem29z75"/>
+      <target ref="loc-h8k5xnw6bwmnt42o"/>
+      <label kind="guard" x="0" y="130">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-h8k5xnw6bwmnt42o"/>
+      <target ref="loc-1n98q7ergxh0kqxi"/>
+      <label kind="guard" x="0" y="230">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="250">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-1n98q7ergxh0kqxi"/>
+      <target ref="loc-yx4lx4t1hnmzs5ey"/>
+      <label kind="guard" x="0" y="330">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-yx4lx4t1hnmzs5ey"/>
+      <target ref="loc-byooy75vwj5l1sff"/>
+      <label kind="guard" x="0" y="430">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="450">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-byooy75vwj5l1sff"/>
+      <target ref="loc-txe9akgxortjr7fi"/>
+      <label kind="guard" x="0" y="530">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-txe9akgxortjr7fi"/>
+      <target ref="loc-00ghfe3g6cubonj4"/>
+      <label kind="guard" x="0" y="630">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="650">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-00ghfe3g6cubonj4"/>
+      <target ref="loc-agllnjinnmpzyh8w"/>
+      <label kind="guard" x="0" y="730">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-agllnjinnmpzyh8w"/>
+      <target ref="loc-owt8yjf72jqhh8u6"/>
+      <label kind="guard" x="0" y="830">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="850">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-owt8yjf72jqhh8u6"/>
+      <target ref="loc-fse7c4go1ha55ljz"/>
+      <label kind="guard" x="0" y="930">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-fse7c4go1ha55ljz"/>
+      <target ref="loc-0k0jphlwdceicwkv"/>
+      <label kind="guard" x="0" y="1030">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="1050">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-0k0jphlwdceicwkv"/>
+      <target ref="loc-1zxt6docina91aqq"/>
+      <label kind="guard" x="0" y="1130">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-1zxt6docina91aqq"/>
+      <target ref="loc-0ga4s7gvpmf7vb7z"/>
+      <label kind="guard" x="0" y="1230">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="1250">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-0ga4s7gvpmf7vb7z"/>
+      <target ref="loc-psevzs55ir7s0soi"/>
+      <label kind="guard" x="0" y="1330">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-psevzs55ir7s0soi"/>
+      <target ref="loc-3pd5l910mmb0ekd8"/>
+      <label kind="guard" x="0" y="1430">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="1450">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-3pd5l910mmb0ekd8"/>
+      <target ref="loc-8enrrods49ldu47c"/>
+      <label kind="guard" x="0" y="1530">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-8enrrods49ldu47c"/>
+      <target ref="loc-89cijysup9caiyfd"/>
+      <label kind="guard" x="0" y="1630">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="1650">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-89cijysup9caiyfd"/>
+      <target ref="loc-8na2r9gbuseavucz"/>
+      <label kind="guard" x="0" y="1730">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-8na2r9gbuseavucz"/>
+      <target ref="loc-tul1cwwjidrloanp"/>
+      <label kind="guard" x="0" y="1830">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="1850">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-tul1cwwjidrloanp"/>
+      <target ref="loc-wkk4lmnwejvgpp63"/>
+      <label kind="guard" x="0" y="1930">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-wkk4lmnwejvgpp63"/>
+      <target ref="loc-ekhzp8hepn1x2bpq"/>
+      <label kind="guard" x="0" y="2030">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="2050">t_active = 0,
+t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-ekhzp8hepn1x2bpq"/>
+      <target ref="loc-4my6t8tvx80x1joe"/>
+      <label kind="guard" x="0" y="2130">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-4my6t8tvx80x1joe"/>
+      <target ref="loc-511am5lj5safemw5"/>
+      <label kind="guard" x="0" y="2230">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="2250">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-511am5lj5safemw5"/>
+      <target ref="loc-cz33ykvn43nabwp0"/>
+      <label kind="guard" x="0" y="2330">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-cz33ykvn43nabwp0"/>
+      <target ref="loc-7wgmwykqxo4iun3d"/>
+      <label kind="guard" x="0" y="2430">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="2450">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-7wgmwykqxo4iun3d"/>
+      <target ref="loc-pib8jvvlp24omxy7"/>
+      <label kind="guard" x="0" y="2530">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-pib8jvvlp24omxy7"/>
+      <target ref="loc-pvl5n1xd2nr46whd"/>
+      <label kind="guard" x="0" y="2630">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="2650">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-pvl5n1xd2nr46whd"/>
+      <target ref="loc-ngk9wv33m5ymae9k"/>
+      <label kind="guard" x="0" y="2730">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-ngk9wv33m5ymae9k"/>
+      <target ref="loc-ixnf036u7ij67nk9"/>
+      <label kind="guard" x="0" y="2830">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="2850">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-ixnf036u7ij67nk9"/>
+      <target ref="loc-oh99q6ij2zcfb23z"/>
+      <label kind="guard" x="0" y="2930">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-oh99q6ij2zcfb23z"/>
+      <target ref="loc-due759qyq49wkcku"/>
+      <label kind="guard" x="0" y="3030">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="3050">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-due759qyq49wkcku"/>
+      <target ref="loc-dpjholc5zmv8pu6j"/>
+      <label kind="guard" x="0" y="3130">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-dpjholc5zmv8pu6j"/>
+      <target ref="loc-bqkswxx1wchnj95t"/>
+      <label kind="guard" x="0" y="3230">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="3250">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-bqkswxx1wchnj95t"/>
+      <target ref="loc-k663v53rfcsgx3ht"/>
+      <label kind="guard" x="0" y="3330">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-k663v53rfcsgx3ht"/>
+      <target ref="loc-c8rgoz9sehyaxsld"/>
+      <label kind="guard" x="0" y="3430">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="3450">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-c8rgoz9sehyaxsld"/>
+      <target ref="loc-wglvee9agpeb4aqp"/>
+      <label kind="guard" x="0" y="3530">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-wglvee9agpeb4aqp"/>
+      <target ref="loc-kpkt41zb0nt0hter"/>
+      <label kind="guard" x="0" y="3630">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="3650">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-kpkt41zb0nt0hter"/>
+      <target ref="loc-cuvn0ap0nw64335r"/>
+      <label kind="guard" x="0" y="3730">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-cuvn0ap0nw64335r"/>
+      <target ref="loc-cpejo9kauium687i"/>
+      <label kind="guard" x="0" y="3830">t_exec &gt;= 2</label>
+      <label kind="assignment" x="0" y="3850">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-cpejo9kauium687i"/>
+      <target ref="loc-m7bvmgkeu96cydor"/>
+      <label kind="guard" x="0" y="3930">t_exec &lt;= 5</label>
+    </transition>
+    <transition>
+      <source ref="loc-m7bvmgkeu96cydor"/>
+      <target ref="loc-uas7ql71q6bw7ab9"/>
+      <label kind="guard" x="0" y="4030">t_exec &gt;= 2</label>
+    </transition>
+    <transition>
+      <source ref="loc-uas7ql71q6bw7ab9"/>
+      <target ref="loc-bcwzrwg20m7i7yu0"/>
+      <label kind="assignment" x="0" y="4150">critical = true,
+step = 10</label>
+      <label kind="synchronisation" x="0" y="4170">DBM_init_end!</label>
+    </transition>
+  </template>
+  <system>Ex = Ex_Tmpl();
+SYNC_Init = SYNC_DBM_Init();
+system Ex, SYNC_Init;</system>
+  <queries/>
+</nta>

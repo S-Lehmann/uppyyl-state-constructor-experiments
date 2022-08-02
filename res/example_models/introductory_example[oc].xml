@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='utf-8'?>
+<nta>
+  <declaration>clock t_exec, t_active;
+bool critical = false;
+int step = 0;
+
+void update_data() { 
+  step++;
+  if (step == 10) { 
+    critical = true;
+  } 
+}
+
+void init_system() { 
+  critical = false;
+  step = 0;
+}
+broadcast chan DBM_init_end;</declaration>
+  <template>
+    <name>Ex_Tmpl</name>
+    <parameter></parameter>
+    <declaration></declaration>
+    <location id="loc-ucvorqt8ilpgt455" x="85" y="-51">
+      <name x="59" y="-85">Execute</name>
+      <label kind="invariant" x="-8" y="-42">t_exec &lt;= 5</label>
+    </location>
+    <location id="loc-kicv1dat4h1jdjpw" x="-195" y="-51">
+      <name x="-205" y="-85">Off</name>
+      <urgent/>
+    </location>
+    <location id="loc-a1gjqufsvgc4o6ls" x="-59" y="-51">
+      <name x="-69" y="-85">On</name>
+      <urgent/>
+    </location>
+    <location id="loc-8hkm9rgdh21wl4h6" x="-109" y="-151">
+      <name x="-89" y="-171">SYNC_Pre_Init</name>
+    </location>
+    <init ref="loc-8hkm9rgdh21wl4h6"/>
+    <transition>
+      <source ref="loc-kicv1dat4h1jdjpw"/>
+      <target ref="loc-a1gjqufsvgc4o6ls"/>
+      <label kind="assignment" x="-187" y="0">init_system(),
+t_active = 0</label>
+      <nail x="-195" y="0"/>
+      <nail x="-102" y="0"/>
+    </transition>
+    <transition>
+      <source ref="loc-ucvorqt8ilpgt455"/>
+      <target ref="loc-a1gjqufsvgc4o6ls"/>
+      <label kind="guard" x="-8" y="17">t_exec &gt;= 2</label>
+      <label kind="assignment" x="-8" y="0">update_data()</label>
+      <nail x="85" y="0"/>
+      <nail x="-17" y="0"/>
+    </transition>
+    <transition>
+      <source ref="loc-a1gjqufsvgc4o6ls"/>
+      <target ref="loc-ucvorqt8ilpgt455"/>
+      <label kind="guard" x="-25" y="-85">!critical</label>
+      <label kind="assignment" x="-25" y="-68">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-a1gjqufsvgc4o6ls"/>
+      <target ref="loc-kicv1dat4h1jdjpw"/>
+      <label kind="guard" x="-153" y="-68">critical</label>
+    </transition>
+    <transition>
+      <source ref="loc-8hkm9rgdh21wl4h6"/>
+      <target ref="loc-a1gjqufsvgc4o6ls"/>
+      <label kind="synchronisation" x="-134" y="-131">DBM_init_end?</label>
+    </transition>
+  </template>
+  <template>
+    <name>SYNC_DBM_Init</name>
+    <parameter></parameter>
+    <declaration></declaration>
+    <location id="loc-ufl030731avkcg6q" x="0" y="0">
+      <name x="20" y="-20">Init</name>
+      <committed/>
+    </location>
+    <location id="loc-uuwdytv1l6ysejrh" x="0" y="100">
+      <name x="20" y="80">Rec1</name>
+    </location>
+    <location id="loc-mcrdrj0jejgeh36q" x="0" y="200">
+      <name x="20" y="180">Rec2</name>
+    </location>
+    <location id="loc-75qa6ejuyipq9qpt" x="0" y="300">
+      <name x="20" y="280">Rec3</name>
+      <urgent/>
+    </location>
+    <location id="loc-i6mxcxwv9m4896nl" x="0" y="400">
+      <name x="20" y="380">End</name>
+    </location>
+    <init ref="loc-ufl030731avkcg6q"/>
+    <transition>
+      <source ref="loc-ufl030731avkcg6q"/>
+      <target ref="loc-uuwdytv1l6ysejrh"/>
+      <label kind="assignment" x="0" y="50">t_active = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-uuwdytv1l6ysejrh"/>
+      <target ref="loc-mcrdrj0jejgeh36q"/>
+      <label kind="assignment" x="0" y="150">t_exec = 0</label>
+    </transition>
+    <transition>
+      <source ref="loc-mcrdrj0jejgeh36q"/>
+      <target ref="loc-75qa6ejuyipq9qpt"/>
+      <label kind="guard" x="0" y="230">t_exec &gt;= 2 &amp;&amp; t_active &gt;= 20 &amp;&amp; t_exec &lt;= 5 &amp;&amp; t_exec - t_active &lt;= -18 &amp;&amp; t_active &lt;= 50 &amp;&amp; t_active - t_exec &lt;= 45</label>
+    </transition>
+    <transition>
+      <source ref="loc-75qa6ejuyipq9qpt"/>
+      <target ref="loc-i6mxcxwv9m4896nl"/>
+      <label kind="assignment" x="0" y="350">critical = true,
+step = 10</label>
+      <label kind="synchronisation" x="0" y="370">DBM_init_end!</label>
+    </transition>
+  </template>
+  <system>Ex = Ex_Tmpl();
+SYNC_Init = SYNC_DBM_Init();
+system Ex, SYNC_Init;</system>
+  <queries/>
+</nta>
