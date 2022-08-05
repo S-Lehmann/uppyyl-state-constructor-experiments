@@ -21,9 +21,9 @@ setup(
     entry_points={
         "console_scripts": [
             'uppyyl_state_constructor_experiments = '
-            'uppyyl_state_constructor_experiments.uppyyl_state_constructor_experiments:main',
+            'uppyyl_state_constructor_experiments.__main__:main',
             'uppyyl-state-constructor-experiments = '
-            'uppyyl_state_constructor_experiments.uppyyl_state_constructor_experiments:main',
+            'uppyyl_state_constructor_experiments.__main__:main',
         ]
     },
     version=version,
